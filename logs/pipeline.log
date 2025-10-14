@@ -1,0 +1,53 @@
+2025-10-14 19:10:35 [INFO] [pipeline] --- Starting Foundry Data Pipeline ---
+2025-10-14 19:10:35 [CRITICAL] [pipeline] --- PIPELINE FAILED ---
+Traceback (most recent call last):
+  File "/home/chinthala-sriram/foundry_reflex/foundry_reflex/utils/data_pipeline_orchestrator.py", line 44, in run_pipeline
+    config, credentials = load_config(), load_credentials()
+                          ^^^^^^^^^^^^^
+  File "/home/chinthala-sriram/foundry_reflex/foundry_reflex/utils/data_pipeline_orchestrator.py", line 17, in load_config
+    with open(config_path, 'r') as file: return yaml.safe_load(file)
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/chinthala-sriram/foundry_reflex/foundry_reflex/config.yaml'
+2025-10-14 19:12:56 [INFO] [pipeline] --- Starting Foundry Data Pipeline ---
+2025-10-14 19:12:56 [CRITICAL] [pipeline] --- PIPELINE FAILED ---
+Traceback (most recent call last):
+  File "/home/chinthala-sriram/foundry_reflex/foundry_reflex/utils/data_pipeline_orchestrator.py", line 52, in run_pipeline
+    config, credentials = load_config(), load_credentials()
+                          ^^^^^^^^^^^^^
+  File "/home/chinthala-sriram/foundry_reflex/foundry_reflex/utils/data_pipeline_orchestrator.py", line 19, in load_config
+    with open(config_path, 'r') as file: return yaml.safe_load(file)
+         ^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/chinthala-sriram/foundry_reflex/foundry_reflex/config.yaml'
+2025-10-14 19:15:11 [INFO] [pipeline] --- Starting Foundry Data Pipeline ---
+2025-10-14 19:15:11 [INFO] [pipeline] Secrets and access token loaded.
+2025-10-14 19:15:11 [INFO] [pipeline] Downloading Fyers symbol master...
+2025-10-14 19:15:12 [INFO] [symbol_resolver] Successfully downloaded and prepared the Fyers symbol master.
+2025-10-14 19:15:12 [INFO] [pipeline] Resolving 11 configured tickers...
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'RELIANCE' -> 'NSE:RELIANCE-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'TCS' -> 'NSE:TCS-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'HDFCBANK' -> 'NSE:HDFCBANK-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'ICICIBANK' -> 'NSE:ICICIBANK-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'INFY' -> 'NSE:INFY-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'HINDUNILVR' -> 'NSE:HINDUNILVR-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'ITC' -> 'NSE:ITC-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'SBIN' -> 'NSE:SBIN-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'BHARTIARTL' -> 'NSE:BHARTIARTL-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'LICI' -> 'NSE:LICI-EQ' (Exact Short Name Match)
+2025-10-14 19:15:13 [INFO] [symbol_resolver] Resolved 'NIFTY 50' -> 'NSE:SETFNIF50-EQ' (Index ETF Match)
+2025-10-14 19:15:13 [INFO] [fyers_dataprovider] Fetching 1095 days of data for 11 symbols...
+2025-10-14 19:15:14 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:ICICIBANK-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3AICICIBANK-EQ&resolution=D&date_format=1&range_from=2022-10-30&range_to=2023-10-25&cont_flag=1
+2025-10-14 19:15:14 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:TCS-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3ATCS-EQ&resolution=D&date_format=1&range_from=2022-10-30&range_to=2023-10-25&cont_flag=1
+2025-10-14 19:15:14 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:HDFCBANK-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3AHDFCBANK-EQ&resolution=D&date_format=1&range_from=2022-10-30&range_to=2023-10-25&cont_flag=1
+2025-10-14 19:15:14 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:INFY-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3AINFY-EQ&resolution=D&date_format=1&range_from=2022-10-30&range_to=2023-10-25&cont_flag=1
+2025-10-14 19:15:15 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:ITC-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3AITC-EQ&resolution=D&date_format=1&range_from=2023-10-25&range_to=2024-10-19&cont_flag=1
+2025-10-14 19:15:15 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:SBIN-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3ASBIN-EQ&resolution=D&date_format=1&range_from=2023-10-25&range_to=2024-10-19&cont_flag=1
+2025-10-14 19:15:15 [ERROR] [fyers_dataprovider] HTTP chunk request failed for NSE:LICI-EQ: 429 Client Error: Too Many Requests for url: https://api-t1.fyers.in/data/history?symbol=NSE%3ALICI-EQ&resolution=D&date_format=1&range_from=2023-10-25&range_to=2024-10-19&cont_flag=1
+2025-10-14 19:15:17 [INFO] [fyers_dataprovider] Concurrent data fetch complete.
+2025-10-14 19:15:17 [INFO] [pipeline] Calculating Intelligence Layers...
+2025-10-14 19:15:26 [INFO] [pipeline] Intelligence calculated.
+2025-10-14 19:15:26 [INFO] [pipeline] Connecting to database and saving all data...
+2025-10-14 19:15:26 [INFO] [pipeline] Database setup complete.
+2025-10-14 19:15:27 [INFO] [pipeline] Saved 8928 raw price records.
+2025-10-14 19:15:27 [INFO] [pipeline] Saved 930 market regime records.
+2025-10-14 19:15:27 [INFO] [pipeline] Saved/Updated 10 RS ranking records.
+2025-10-14 19:15:28 [INFO] [pipeline] --- Foundry Data Pipeline Finished Successfully ---

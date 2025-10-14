@@ -1,0 +1,9 @@
+fyers_apiv3
+reflex==0.8.14.post1
+toml
+pyyaml
+pandas
+duckdb
+tqdm
+pandas-ta requests
+asyncio

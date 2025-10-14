@@ -1,0 +1,71 @@
+# glossary.yaml
+# Central knowledge base for all technical terms in the Foundry application.
+
+# Core Performance Metrics
+return_pct:
+  term: "Return [%]"
+  definition: "The total percentage return on the initial capital over the entire backtest period. This is the strategy's final P&L."
+  calculation: "((Final Equity - Initial Equity) / Initial Equity) * 100"
+
+buy_hold_return_pct:
+  term: "Buy & Hold Return [%]"
+  definition: "The return you would have achieved by simply buying the asset on the first day and selling on the last day. This is the benchmark to beat."
+  calculation: "((Last Close Price - First Close Price) / First Close Price) * 100"
+
+max_drawdown_pct:
+  term: "Max. Drawdown [%]"
+  definition: "The largest peak-to-trough drop in your account equity, expressed as a percentage. It is the worst-case loss you would have experienced during the backtest."
+  calculation: "Maximum((Peak Equity - Trough Equity) / Peak Equity) * 100"
+
+equity_final:
+  term: "Equity Final [$]"
+  definition: "The total value of the trading account at the end of the backtest period, after all trades and costs."
+  calculation: "Initial Equity + Sum of All Trade Profits/Losses"
+
+# Risk-Adjusted Ratios
+sharpe_ratio:
+  term: "Sharpe Ratio"
+  definition: "Measures the risk-adjusted return. A higher Sharpe Ratio is generally better. It indicates how much excess return you are getting for each unit of volatility (risk)."
+  calculation: "(Strategy Return - Risk-Free Rate) / Strategy's Standard Deviation of Returns"
+
+sortino_ratio:
+  term: "Sortino Ratio"
+  definition: "Similar to the Sharpe Ratio, but it only considers downside volatility (bad risk). It does not penalize for upward volatility (good risk). A higher value is better."
+  calculation: "(Strategy Return - Risk-Free Rate) / Strategy's Standard Deviation of Downside Returns"
+
+calmar_ratio:
+  term: "Calmar Ratio"
+  definition: "Measures return relative to the maximum drawdown. It is useful for assessing performance during the worst periods. A higher value is better."
+  calculation: "Annualized Strategy Return / Absolute(Max. Drawdown)"
+
+# Trade-Specific Metrics
+total_trades:
+  term: "# Trades"
+  definition: "The total number of closed trades (one buy and one sell is a single trade) executed during the backtest period."
+  calculation: "A simple count of all completed trading cycles."
+
+win_rate_pct:
+  term: "Win Rate (%)"
+  definition: "The percentage of total trades that were profitable."
+  calculation: "(Number of Winning Trades / Total Trades) * 100"
+
+profit_factor:
+  term: "Profit Factor"
+  definition: "The ratio of gross profits to gross losses. A value greater than 1 means the strategy is profitable. A value of 2 means it made twice as much on winners as it lost on losers."
+  calculation: "Sum of All Winning Trades / Absolute(Sum of All Losing Trades)"
+  
+expectancy_pct:
+  term: "Expectancy [%]"
+  definition: "The average amount you can expect to win or lose per trade, as a percentage of your capital. A positive value indicates a profitable system over the long run."
+  calculation: "(Win Rate * Average Win %) - (Loss Rate * Average Loss %)"
+
+sqn:
+  term: "System Quality Number (SQN)"
+  definition: "A metric developed by Van Tharp that measures the quality of a trading system. It considers the expectancy and standard deviation of returns."
+  calculation: "SQN = (Expectancy / Std Dev of Returns) * SquareRoot(Number of Trades)"
+  interpretation: "< 1.5: Poor, 1.6-1.9: Below Average, 2.0-2.4: Average, 2.5-2.9: Good, 3.0+: Excellent"
+
+avg_trade_pct:
+  term: "Avg. Trade [%]"
+  definition: "The average percentage gain or loss across all trades executed. This is different from Expectancy as it doesn't factor in win/loss frequency."
+  calculation: "Sum of All Trade P&L% / Total Number of Trades"

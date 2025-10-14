@@ -1,0 +1,22 @@
+# In: foundry_reflex/config.yaml
+
+paths:
+  stock_universes: "data/universes.yaml"  # <-- THIS WAS THE MISSING LINE
+  market_data_db: "data/market_data.duckdb"
+  performance_library: "data/performance_library.parquet"
+  strategy_presets: "strategies/"
+  log_file: "logs/engine.log"
+
+tickers:
+  - "RELIANCE"
+  - "TCS"
+  - "HDFCBANK"
+  - "ICICIBANK"
+  - "INFY"
+  - "HINDUNILVR"
+  - "ITC"
+  - "SBIN"
+  - "BHARTIARTL"
+  - "LICI"
+
+market_index: "NIFTY 50"

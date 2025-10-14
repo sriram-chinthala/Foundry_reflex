@@ -1,0 +1,9 @@
+# In: data/universes.yaml
+
+MyFirstUniverse:
+  - NSE:RELIANCE-EQ
+  - NSE:SBIN-EQ
+
+Nifty50_Watchlist:
+  - NSE:HDFCBANK-EQ
+  - NSE:ICICIBANK-EQ

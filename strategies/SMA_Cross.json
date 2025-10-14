@@ -1,0 +1,26 @@
+{
+    "strategy_name": "SMA_Cross",
+    "strategy_file": "configurable_strategy",
+    "strategy_class": "ConfigurableStrategy",
+    "parameters": {
+        "rules": {
+            "entry": [
+                {
+                    "id": "group1",
+                    "type": "group",
+                    "logical_op": "AND",
+                    "conditions": [
+                        {
+                            "id": "cond1",
+                            "type": "condition",
+                            "left": "SMA(50)",
+                            "operator": "Crosses Above",
+                            "right": "SMA(200)"
+                        }
+                    ]
+                }
+            ],
+            "exit": []
+        }
+    }
+}
