@@ -1,5 +1,9 @@
 # utils/performance_library_engine.py
 
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+
 import logging
 import multiprocessing
 import os
@@ -11,15 +15,13 @@ import pandas as pd
 import yaml
 from backtesting import Backtest
 from tqdm import tqdm
-from utils.logger_setup import get_logger
+from .logger_setup import get_logger
 logger = get_logger("engine", "logs/engine.log")
 
-import sys
-from pathlib import Path
 
-project_root = Path(__file__).resolve().parent.parent
+
+project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.append(str(project_root))
-
 # --- Helper Functions & Imports ---
 
 # This allows us to dynamically import the strategy class from a file
@@ -34,7 +36,7 @@ log_file_path.parent.mkdir(exist_ok=True)
 # Load configuration
 try:
     # --- CHANGE #1: Use the absolute path to load config.yaml ---
-    config_path = project_root / "config.yaml"
+    config_path = Path("config.yaml")
     with open(config_path, "r") as f:
         CONFIG = yaml.safe_load(f)
     PATHS = CONFIG.get("paths", {})

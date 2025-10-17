@@ -1,5 +1,3 @@
-# In: foundry_reflex/foundry_reflex/state/engine_state.py
-
 import reflex as rx
 import subprocess
 import sys
@@ -20,38 +18,57 @@ class EngineState(DataManagementState):
     engine_log: str = "Engine has not been run yet."
     last_run_summary: dict = {}
 
+    # --- COMPUTED VARS FOR SAFE UI DISPLAY ---
+    # This is the correct pattern to avoid VarAttributeError.
+    # The UI will use these safe, pre-processed variables.
+
     @rx.var
     def universe_options(self) -> list[str]:
-        """Get list of available universes."""
+        """Safely gets the list of universe names for the UI."""
         return list(self.stock_universes.keys()) if self.stock_universes else []
-    
+
     @rx.var
     def strategy_options(self) -> list[str]:
-        """Get list of available strategies."""
+        """Safely gets the list of strategy presets for the UI."""
         return self.strategy_presets if self.strategy_presets else []
 
-    async def run_performance_engine(self):
-        """
-        Runs the performance library engine as a background task.
-        """
-        async with self:
-            if self.is_engine_running:
-                return
+    @rx.var
+    def summary_status(self) -> str:
+        """Safely gets the status from the last run summary."""
+        return self.last_run_summary.get("status", "N/A")
 
-            self.is_engine_running = True
-            self.last_run_summary = {}
-            self.engine_log = "Starting Performance Engine...\n"
+    @rx.var
+    def summary_stocks_processed(self) -> str:
+        """Safely gets the stock count from the last run summary."""
+        return str(self.last_run_summary.get("stocks", "N/A"))
 
+    @rx.var
+    def summary_strategies_tested(self) -> str:
+        """Safely gets the strategy count from the last run summary."""
+        return str(self.last_run_summary.get("strategies", "N/A"))
+    
+    # --- END OF COMPUTED VARS ---
+
+
+    def start_engine_subprocess(self):
+        """Event handler to prepare for and launch the engine background task."""
+        if self.is_engine_running:
+            return
+        if not self.selected_universe or not self.selected_strategy:
+            self.engine_log = "ERROR: Please select a universe and a strategy before launching."
+            return
+
+        self.is_engine_running = True
+        self.last_run_summary = {}
+        self.engine_log = f"Launching engine for universe '{self.selected_universe}' with strategy '{self.selected_strategy}'...\n"
+        
+        return EngineState.run_engine_background
+
+    @rx.background
+    async def run_engine_background(self):
+        """Runs the performance library engine in a subprocess without blocking the UI."""
         try:
-            # Get stocks from the selected universe
             stocks_to_run = self.stock_universes.get(self.selected_universe, [])
-
-            if not stocks_to_run or not self.selected_strategy:
-                async with self:
-                    self.engine_log += "\nERROR: A universe and a strategy must be selected."
-                    self.is_engine_running = False
-                return
-
             project_root = Path(__file__).resolve().parent.parent.parent
             
             command = [
@@ -69,11 +86,11 @@ class EngineState(DataManagementState):
             )
 
             while True:
-                line = await process.stdout.readline()
-                if not line:
+                line_bytes = await process.stdout.readline()
+                if not line_bytes:
                     break
                 async with self:
-                    self.engine_log += line.decode('utf-8', errors='ignore')
+                    self.engine_log += line_bytes.decode('utf-8', errors='ignore')
 
             await process.wait()
             
@@ -84,9 +101,8 @@ class EngineState(DataManagementState):
                     "strategies": 1,
                     "return_code": process.returncode
                 }
-                
-                # Reload data after successful run
                 if process.returncode == 0:
+                    # Reload data to update the main dashboard's summary
                     self.load_project_data()
 
         except Exception as e:
@@ -97,3 +113,4 @@ class EngineState(DataManagementState):
             async with self:
                 self.engine_log += "\n--- Engine run complete. ---"
                 self.is_engine_running = False
+

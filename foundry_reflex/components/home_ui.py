@@ -1,12 +1,9 @@
-# In: foundry_reflex/components/home_ui.py
-
 import reflex as rx
 from foundry_reflex.state.data_management_state import DataManagementState
 
 def home_dashboard() -> rx.Component:
     """The main dashboard UI for the application."""
     return rx.container(
-        # The positional argument (the main UI component) now comes FIRST.
         rx.vstack(
             rx.heading("Foundry Migration Status", size="8"),
             rx.text("This page tests the migrated data utility functions by loading data into the Reflex state."),
@@ -20,24 +17,24 @@ def home_dashboard() -> rx.Component:
                     rx.card(
                         rx.vstack(
                             rx.text("Performance Library Summary", weight="bold"),
-        
-                                # --- NEW: Added a tooltip to this text component ---
+                            
+                            # Use the new, safe computed vars from the state
                             rx.tooltip(
-                                rx.text(f"Total Backtests: {DataManagementState.performance_library_summary.get('Total Backtests', 'N/A')}"),
+                                rx.text(f"Total Backtests: {DataManagementState.total_backtests_str}"),
                                 content=DataManagementState.total_trades_definition,
                             ),
-                            # --- END OF NEW CODE ---
-
-        rx.text(f"Unique Strategies: {DataManagementState.performance_library_summary.get('Unique Strategies', 'N/A')}"),
-        rx.text(f"Unique Stocks: {DataManagementState.performance_library_summary.get('Unique Stocks', 'N/A')}"),
-        spacing="1"
-    ),
-    width="100%"
-),
+                            rx.text(f"Unique Strategies: {DataManagementState.unique_strategies_str}"),
+                            rx.text(f"Unique Stocks: {DataManagementState.unique_stocks_str}"),
+                            
+                            spacing="1"
+                        ),
+                        width="100%"
+                    ),
                     
                     rx.card(
                         rx.vstack(
                             rx.text("Strategy Presets Found", weight="bold"),
+                            # This foreach is safe because strategy_presets is already a list
                             rx.foreach(
                                 DataManagementState.strategy_presets,
                                 lambda preset: rx.badge(preset, color_scheme="blue")
@@ -50,8 +47,9 @@ def home_dashboard() -> rx.Component:
                     rx.card(
                         rx.vstack(
                             rx.text("Stock Universes Found", weight="bold"),
+                             # Use the new computed var that safely gets the keys as a list
                              rx.foreach(
-                                DataManagementState.stock_universes.keys(),
+                                DataManagementState.stock_universe_names,
                                 lambda universe: rx.badge(universe, color_scheme="purple")
                             ),
                             spacing="1"
@@ -62,6 +60,7 @@ def home_dashboard() -> rx.Component:
                     width="100%"
                 ),
                 
+                # This is the "else" part of rx.cond, shown while data is loading
                 rx.vstack(
                     rx.spinner(size="3"),
                     rx.text("Loading project data from disk...")
@@ -71,7 +70,6 @@ def home_dashboard() -> rx.Component:
             width="100%"
         ),
         
-        # ALL keyword arguments now come AFTER the positional argument.
         on_mount=DataManagementState.load_project_data,
         padding_top="2em",
         max_width="800px"

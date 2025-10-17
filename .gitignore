@@ -1,25 +1,22 @@
-__pycache__/
-*.py[cod]
-.states
-assets/external/
-*.db
-.web
-# Secrets - DO NOT COMMIT THIS
-secrets.toml
-.env
-generate_auth_url.py
-exchange_token.py
-# Python virtual environment
-.venv/
-venv/
-ENV/
-
-# Python cache files
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
 # IDE and editor folders
-.vscode/
+# Python cache files
+# Python virtual environment
+# Secrets - DO NOT COMMIT THIS
+*.db
+*.py[cod]
+*.pyc
+*.pyd
+*.pyo
+.env
 .idea/
+.states
+.venv/
+.vscode/
+.web
+ENV/
+__pycache__/
+assets/external/
+exchange_token.py
+generate_auth_url.py
+secrets.toml
+venv/
